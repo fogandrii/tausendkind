@@ -1,5 +1,4 @@
 <?php
-// src/AppBundle/Admin/PostAdmin.php
 
 namespace AppBundle\Admin;
 
@@ -10,14 +9,25 @@ use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 
+/**
+ * Class CustomerAdmin
+ * @package AppBundle\Admin
+ */
 class CustomerAdmin extends AbstractAdmin
 {
 
+    /**
+     * @param RouteCollection $collection
+     */
     protected function configureRoutes(RouteCollection $collection)
     {
         $collection->add('clone', $this->getRouterIdParameter() . '/clone');
     }
 
+    /**
+     * @param array $actions
+     * @return array
+     */
     public function configureBatchActions($actions)
     {
         if (
@@ -33,7 +43,9 @@ class CustomerAdmin extends AbstractAdmin
         return $actions;
     }
 
-    // Fields to be shown on create/edit forms
+    /**
+     * @param FormMapper $formMapper
+     */
     protected function configureFormFields(FormMapper $formMapper)
     {
         $formMapper
@@ -52,7 +64,9 @@ class CustomerAdmin extends AbstractAdmin
         ;
     }
 
-    // Fields to be shown on filter forms
+    /**
+     * @param DatagridMapper $datagridMapper
+     */
     protected function configureDatagridFilters(DatagridMapper $datagridMapper)
     {
         $datagridMapper
@@ -60,10 +74,13 @@ class CustomerAdmin extends AbstractAdmin
             ->add('prefix')
             ->add('firstname')
             ->add('lastname')
+            ->add('createdAt')
         ;
     }
 
-    // Fields to be shown on lists
+    /**
+     * @param ListMapper $listMapper
+     */
     protected function configureListFields(ListMapper $listMapper)
     {
         $listMapper
@@ -71,6 +88,7 @@ class CustomerAdmin extends AbstractAdmin
             ->add('prefix')
             ->add('firstname')
             ->add('lastname')
+            ->add('createdAt')
             ->add('_action', null, array(
                 'actions' => array(
                     'show' => array(),
@@ -81,10 +99,13 @@ class CustomerAdmin extends AbstractAdmin
                         )
                     )
                 )
-            );
+            )
+        ;
     }
 
-    // Fields to be shown on show action
+    /**
+     * @param ShowMapper $showMapper
+     */
     protected function configureShowFields(ShowMapper $showMapper)
     {
         $showMapper
@@ -92,6 +113,8 @@ class CustomerAdmin extends AbstractAdmin
             ->add('prefix')
             ->add('firstname')
             ->add('lastname')
+            ->add('createdAt')
+            ->add('addresses', null, array('associated_property' => 'street'))
         ;
     }
 }

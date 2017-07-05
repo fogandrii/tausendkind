@@ -8,6 +8,10 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
+/**
+ * Class CRUDController
+ * @package AppBundle\Controller
+ */
 class CRUDController extends Controller
 {
     /**
