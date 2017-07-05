@@ -1,11 +1,21 @@
 services:
-    app.admin.post:
-        class: AppBundle\Admin\PostAdmin
+    app.admin.customer:
+        class: AppBundle\Admin\CustomerAdmin
         tags:
-            - { name: sonata.admin, manager_type: orm, group: "Content", label: "Post" }
+            - { name: sonata.admin, manager_type: orm, group: "Content", label: "Customer" }
         arguments:
             - ~
-            - AppBundle\Entity\Post
+            - AppBundle\Entity\Customer
+            - ~
+        calls:
+            - [ setTranslationDomain, [AppBundle]]
+    app.admin.address:
+        class: AppBundle\Admin\AddressAdmin
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: "Content", label: "Address" }
+        arguments:
+            - ~
+            - AppBundle\Entity\Address
             - ~
         calls:
             - [ setTranslationDomain, [AppBundle]]
