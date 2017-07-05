@@ -4,6 +4,7 @@
 namespace AppBundle\Admin;
 
 use Sonata\AdminBundle\Admin\AbstractAdmin;
+use Sonata\AdminBundle\Route\RouteCollection;
 use Sonata\AdminBundle\Show\ShowMapper;
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
@@ -11,6 +12,27 @@ use Sonata\AdminBundle\Datagrid\DatagridMapper;
 
 class CustomerAdmin extends AbstractAdmin
 {
+
+    protected function configureRoutes(RouteCollection $collection)
+    {
+        $collection->add('clone', $this->getRouterIdParameter() . '/clone');
+    }
+
+    public function configureBatchActions($actions)
+    {
+        if (
+            $this->hasRoute('edit') && $this->hasAccess('edit') &&
+            $this->hasRoute('delete') && $this->hasAccess('delete')
+        ) {
+            $actions['clone'] = array(
+                'ask_confirmation' => true
+            );
+
+        }
+
+        return $actions;
+    }
+
     // Fields to be shown on create/edit forms
     protected function configureFormFields(FormMapper $formMapper)
     {
@@ -49,7 +71,17 @@ class CustomerAdmin extends AbstractAdmin
             ->add('prefix')
             ->add('firstname')
             ->add('lastname')
-        ;
+            ->add('_action', null, array(
+                'actions' => array(
+                    'show' => array(),
+                    'edit' => array(),
+                    'delete' => array(),
+                    'clone' => array(
+                        'template' => 'AppBundle:CRUD:list__action_clone.html.twig'
+                        )
+                    )
+                )
+            );
     }
 
     // Fields to be shown on show action
